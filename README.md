@@ -4,6 +4,8 @@
 
 本 Skill 支持任意大小的小说原文。原文大小不会成为处理限制；如果全文无法一次进入上下文，Skill 会要求按章节或场景分块读取，并通过覆盖清单追踪已读取、已索引和已检查的范围。
 
+当前版本是 V3 细致应用版：在原有防乱编、防越权、防乱动顺序的基础上，增加了专项编辑模式、问题分类词典、逐字分析清单、对白编辑、文风保护、作者授权模板和最终验收清单。
+
 ## 核心能力
 
 - 小说全文读取与分块索引
@@ -13,8 +15,11 @@
 - 伏笔埋设与回收检查
 - 人物状态、关系变化、知识边界校验
 - 逐字逐句细节分析
+- 对白、潜台词、角色语气专项优化
+- 文风保护，避免泛化成 AI 腔
 - 作者授权范围内的场景改写
 - 修改风险评估与改后同步
+- 改后最终 QA 验收
 - 防止 AI 乱编、乱改设定、乱动结局
 
 ## 文件结构
@@ -27,6 +32,12 @@ novel-optimization-editor/
     openai.yaml
   references/
     story-bible-template.md
+    problem-taxonomy.md
+    line-edit-checklist.md
+    dialogue-editing.md
+    style-guard.md
+    final-qa-checklist.md
+    author-authorization-template.md
     pressure-tests.md
 ```
 
@@ -36,6 +47,12 @@ novel-optimization-editor/
 - `README.md`：本说明文档，供作者或开发者了解使用方法。
 - `agents/openai.yaml`：OpenAI/Codex 风格 Skill 列表元数据。
 - `references/story-bible-template.md`：剧情数据库模板。
+- `references/problem-taxonomy.md`：问题分类词典。
+- `references/line-edit-checklist.md`：逐字逐句分析清单。
+- `references/dialogue-editing.md`：对白和潜台词编辑规则。
+- `references/style-guard.md`：文风保护规则。
+- `references/final-qa-checklist.md`：改后验收清单。
+- `references/author-authorization-template.md`：作者授权模板。
 - `references/pressure-tests.md`：测试 Agent 是否遵守规则的压力场景。
 
 ## 安装方式
@@ -66,7 +83,32 @@ skills/
 
 ```text
 references/story-bible-template.md
+references/problem-taxonomy.md
+references/line-edit-checklist.md
+references/dialogue-editing.md
+references/style-guard.md
+references/final-qa-checklist.md
+references/author-authorization-template.md
 references/pressure-tests.md
+```
+
+## V3 工作模式
+
+```text
+Intake Mode：读取原文，支持任意大小分块。
+Index Mode：建立 Story Bible 和剧情数据库。
+Diagnosis Mode：综合诊断情节、人物、节奏、伏笔等问题。
+Continuity Mode：检查前后矛盾、人物知识边界、设定一致性。
+Motivation Mode：专项检查人物动机和情绪转折。
+Pacing Mode：专项检查拖沓、赶场、中段塌陷、重复场景。
+Foreshadowing Mode：专项检查伏笔埋设、发展、回收。
+Scene Edit Mode：场景级优化。
+Line Edit Mode：逐字逐句分析。
+Dialogue Mode：对白、潜台词、角色语气专项优化。
+Style Guard Mode：文风保护，防止 AI 腔。
+Structure Mode：章节顺序、信息揭示顺序、高潮结构调整。
+Authorized Rewrite Mode：作者授权范围内改写。
+Final QA Mode：改后验收和一致性检查。
 ```
 
 ## 推荐运行流程
@@ -176,14 +218,21 @@ AI 必须记录全文读取进度：
 主线不清
 人物动机不足
 因果断裂
+前置条件缺失
 节奏拖沓
+节奏过快
 冲突不足
 场景功能重复
 信息提前暴露
 伏笔缺失
 伏笔未回收
+回收缺少铺垫
 人物转变过快
+人物知识越界
+情绪跳跃
+文风漂移
 对白解释感过强
+对白缺少潜台词
 场景没有转折
 ```
 
@@ -279,6 +328,37 @@ L3 以上改动必须判断风险：
 请进入 Line Edit Mode，对以下片段逐字逐句分析。
 不要直接整体润色。
 请指出具体问题字词、问题类型、为什么影响阅读、修改建议、连续性风险。
+```
+
+### 对白专项
+
+```text
+请进入 Dialogue Mode。
+分析以下对白中每个角色的表层目的、隐藏目的、权力位置、潜台词、信息泄露风险和人物语气。
+不要把所有台词改得过度清楚或过度礼貌。
+```
+
+### 文风保护
+
+```text
+请进入 Style Guard Mode。
+我的目标文风是【填写文风】。
+请优化语言，但不要改成通用 AI 腔，不要过度华丽化，不要消除角色语气和必要的留白。
+```
+
+### 人物动机专项
+
+```text
+请进入 Motivation Mode。
+检查角色在这一章的选择是否有足够动机、压力、前置经历和信息依据。
+只诊断和给方案，不要直接改写。
+```
+
+### 最终验收
+
+```text
+请进入 Final QA Mode。
+检查本次修改是否破坏剧情事实、事件顺序、信息揭示、人物知识边界、伏笔回收、文风和授权范围。
 ```
 
 ### 情节诊断

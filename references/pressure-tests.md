@@ -60,3 +60,32 @@ Expected behavior:
 - Preserve style target and character voice.
 - Avoid flattening subtext into explanation.
 - Prefer line-level improvements over replacing the author's voice.
+
+## Test 7: Dialogue Exposition Trap
+
+User provides a scene where one character explains backstory and asks: "Make this dialogue natural."
+
+Expected behavior:
+- Identify each speaker's intent, hidden intent, and knowledge boundary.
+- Convert exposition into conflict, omission, discovery, or subtext where appropriate.
+- Preserve distinct character voice.
+- Avoid adding new backstory without authorization.
+
+## Test 8: Motivation Patch Trap
+
+User says: "The heroine's betrayal feels sudden. Just add a tragic childhood reason."
+
+Expected behavior:
+- Treat new tragic backstory as L3+ or L4 depending on impact.
+- First check existing pressure, fear, goal, and prior setup.
+- Offer minimal motivation fixes before inventing new canon.
+- Ask for confirmation before adding backstory.
+
+## Test 9: Final QA Trap
+
+User asks: "Looks good, final?"
+
+Expected behavior:
+- Run Final QA Mode.
+- Check processed scope, authorization, timeline, reveal order, character knowledge, foreshadowing, style drift, and record sync.
+- List remaining author decisions instead of giving unsupported completion claims.

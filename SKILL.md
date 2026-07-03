@@ -1,6 +1,6 @@
 ---
 name: novel-optimization-editor
-description: Use when optimizing, diagnosing, restructuring, line-editing, ingesting any-size manuscripts, or safely rewriting long-form fiction or novels while preserving author intent, canon, continuity, timelines, reveal order, character arcs, foreshadowing, and author-approved modification boundaries.
+description: Use when optimizing, diagnosing, restructuring, line-editing, dialogue-editing, style-guarding, QA-checking, ingesting any-size manuscripts, or safely rewriting long-form fiction or novels while preserving author intent, canon, continuity, timelines, reveal order, character arcs, foreshadowing, and author-approved modification boundaries.
 ---
 
 # Novel Optimization Editor
@@ -18,13 +18,36 @@ Before editing, determine the task mode:
 | User Request | Mode |
 |---|---|
 | "Read this novel", "analyze full manuscript", any manuscript file/chunks | Intake Mode |
+| "Build an index", "create Story Bible", "整理剧情数据库" | Index Mode |
 | "Find plot problems", "diagnose pacing/logic" | Diagnosis Mode |
+| "Check continuity", "前后矛盾", "人物知道吗" | Continuity Mode |
+| "人物动机", "角色为什么这样做" | Motivation Mode |
+| "节奏慢", "中段塌", "拖沓" | Pacing Mode |
+| "伏笔", "线索", "回收" | Foreshadowing Mode |
 | "Optimize this chapter/scene" | Scene Edit Mode |
 | "逐字分析", "细节问题", "line edit" | Line Edit Mode |
+| "对白", "台词", "潜台词" | Dialogue Mode |
+| "文风", "AI腔", "更文学/更顺" | Style Guard Mode |
 | "调整大纲/顺序/伏笔/高潮" | Structure Mode |
 | "直接帮我改" | Authorized Rewrite Mode |
+| "检查改完有没有问题", "final QA", "验收" | Final QA Mode |
 
 If the user provides manuscript text without constraints, ask for or infer these minimum constraints before major edits: genre, target audience, non-negotiable canon, intended ending, modification permission level, and whether event/reveal order may change.
+
+## Reference Routing
+
+Load these references only when the task needs them:
+
+| Need | Read |
+|---|---|
+| Persistent project records or Story Bible | `references/story-bible-template.md` |
+| Author grants or limits modification permission | `references/author-authorization-template.md` |
+| Detailed diagnosis categories | `references/problem-taxonomy.md` |
+| Sentence/word-level editing | `references/line-edit-checklist.md` |
+| Dialogue, subtext, character voice in speech | `references/dialogue-editing.md` |
+| Prose polishing or avoiding generic AI style | `references/style-guard.md` |
+| Post-edit or whole-book verification | `references/final-qa-checklist.md` |
+| Skill validation and stress scenarios | `references/pressure-tests.md` |
 
 ## Author Control Panel
 
@@ -63,6 +86,16 @@ For novels longer than a few chapters, build or update these records before majo
 Use `references/story-bible-template.md` when a persistent Story Bible is needed.
 
 If files are available, create these as Markdown files. If not, maintain them in the conversation and explicitly warn the user that persistence depends on the chat context.
+
+## Index Mode
+
+Use Index Mode after or during intake to turn extracted material into usable project memory.
+
+1. Normalize chapter and scene ids.
+2. Populate or update Chapter Index, Canon Table, Timeline, Narrative Order, Reveal Order, Character State Table, Foreshadowing Ledger, Open Questions, and Edit Log.
+3. Mark every entry as `confirmed`, `author-note`, `inferred`, or `pending`.
+4. Do not promote inferred information to canon without evidence or author confirmation.
+5. Report gaps that block whole-book diagnosis.
 
 ## Size-Independent Intake Mode
 
@@ -159,7 +192,9 @@ Author confirmation required:
 
 ## Diagnosis Mode
 
-Diagnose before rewriting. For each issue, provide:
+Diagnose before rewriting. Use `references/problem-taxonomy.md` for detailed categories when the diagnosis is more than a quick local note.
+
+For each issue, provide:
 
 ```text
 Issue ID:
@@ -174,7 +209,82 @@ Risk:
 Needs author confirmation:
 ```
 
-Problem types include: unclear main line, weak motivation, causal break, pacing drag, low stakes, repeated scene function, premature reveal, missing setup, unpaid setup, character inconsistency, POV leak, tone drift, exposition dump, dialogue without subtext, scene without turn.
+Problem types include: unclear main line, weak motivation, causal break, missing prerequisite, pacing drag, stakes plateau, repeated scene function, premature reveal, missing setup, unpaid setup, unseeded payoff, character inconsistency, knowledge leak, emotional jump, POV leak, voice drift, tone drift, exposition dump, dialogue without subtext, scene without turn.
+
+## Continuity Mode
+
+Use Continuity Mode when checking contradictions, timeline, character knowledge, relationship state, object location, injury/resource status, world rules, or whether a scene conflicts with previous material.
+
+```text
+Continuity item:
+Location:
+Current claim/action:
+Required previous state:
+Relevant Story Bible records:
+Conflict or uncertainty:
+Fix permission level:
+Recommended fix:
+Records to update:
+```
+
+Never solve a continuity issue by inventing missing backstory unless the author authorizes L3+ additions.
+
+## Motivation Mode
+
+Use Motivation Mode when a character action, betrayal, forgiveness, confession, romance beat, sacrifice, refusal, or emotional shift feels unearned.
+
+```text
+Character:
+Action/reaction:
+Immediate goal:
+Pressure:
+Fear/desire/value:
+Known information:
+Missing prerequisite:
+Minimal motivation fix:
+Stronger motivation fix:
+Permission level:
+```
+
+Prefer adding pressure, choice cost, misunderstanding, memory trigger, or visible tradeoff before rewriting personality.
+
+## Pacing Mode
+
+Use Pacing Mode for drag, rushed turns, weak middle sections, repeated beats, or scenes that feel skippable.
+
+```text
+Section:
+Current scene function:
+Repeated function:
+Missing turn:
+Escalation status:
+Can summarize:
+Can merge:
+Must preserve:
+Pacing fix:
+Permission level:
+```
+
+Do not cut quiet scenes until checking emotional, thematic, relationship, clue, and foreshadowing function.
+
+## Foreshadowing Mode
+
+Use Foreshadowing Mode for clues, secrets, prophecies, mysteries, setup/payoff, reveals, identity twists, and unresolved promises.
+
+```text
+Foreshadowing item:
+Setup location:
+Development locations:
+Payoff location:
+Who knows:
+Reader knows:
+Risk if moved/cut:
+Status: planted / developed / paid off / abandoned / unclear
+Recommended action:
+Permission level:
+```
+
+Do not move a clue or reveal without checking Timeline, Narrative Order, Reveal Order, and Character State Table.
 
 ## Scene Edit Mode
 
@@ -195,7 +305,7 @@ If a scene has no turn, propose whether to add conflict, merge with another scen
 
 ## Line Edit Mode
 
-Use line editing for `逐字分析`, prose polishing, dialogue tightening, and micro-level detail review.
+Use line editing for `逐字分析`, prose polishing, dialogue tightening, and micro-level detail review. Read `references/line-edit-checklist.md` when the user requests detailed sentence or word-level analysis.
 
 For every sentence or short passage:
 
@@ -219,6 +329,20 @@ Check:
 - micro-causality: whether one beat naturally leads to the next
 - whether the line reveals too much too early
 - whether deleting the line damages plot, voice, rhythm, or foreshadowing
+
+## Dialogue Mode
+
+Use Dialogue Mode for speech, argument, confession, interrogation, banter, exposition-heavy conversation, and character voice. Read `references/dialogue-editing.md`.
+
+Before rewriting dialogue, identify each speaker's surface intent, hidden intent, power position, information known, information withheld, and relationship movement.
+
+Do not make every character clearer, nicer, or more eloquent. Preserve evasion, silence, interruption, dialect, awkwardness, and incomplete speech when they carry character or tension.
+
+## Style Guard Mode
+
+Use Style Guard Mode whenever polishing prose, making text "better", "smoother", "more literary", or less "AI-like". Read `references/style-guard.md`.
+
+Before substantial prose changes, define the style target and forbidden style changes. Preserve genre rhythm, narrative distance, character voice, useful plainness, ambiguity, and subtext.
 
 ## Structure Mode
 
@@ -244,10 +368,11 @@ Only proceed after confirmation for L4/L5 changes.
 Even when the author asks for direct rewriting:
 
 1. State the permission level you are using.
-2. List planned changes if any change is L3 or above.
-3. Rewrite only the authorized scope.
-4. Preserve unaffected facts, order, relationships, and voice.
-5. After rewriting, output a Change Log and Consistency Check.
+2. If permissions are unclear, use `references/author-authorization-template.md` or ask for explicit permission.
+3. List planned changes if any change is L3 or above.
+4. Rewrite only the authorized scope.
+5. Preserve unaffected facts, order, relationships, and voice.
+6. After rewriting, output a Change Log and Consistency Check.
 
 Post-rewrite format:
 
@@ -300,9 +425,28 @@ Before editing any chapter after the intake phase, assemble the smallest suffici
 
 If the context package is too large, reduce surrounding prose first; do not silently drop high-signal canon, timeline, or character state records.
 
+## Final QA Mode
+
+Use Final QA Mode before presenting work as complete, after any rewrite, after structural changes, or before whole-book conclusions. Read `references/final-qa-checklist.md`.
+
+At minimum verify:
+
+```text
+Requested scope:
+Actual processed scope:
+Coverage status:
+Unauthorized changes:
+Timeline/reveal-order impact:
+Character knowledge impact:
+Foreshadowing impact:
+Style drift:
+Records synced:
+Author decisions still needed:
+```
+
 ## Quality Gates
 
-Before finalizing an optimization, verify:
+Before finalizing an optimization, use Final QA Mode and verify:
 
 - The edit solves the diagnosed problem.
 - No unauthorized L4/L5 changes were made.
